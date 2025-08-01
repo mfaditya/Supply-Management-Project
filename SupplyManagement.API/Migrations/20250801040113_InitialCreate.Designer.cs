@@ -11,7 +11,7 @@ using SupplyManagement.API.Data;
 namespace SupplyManagement.API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20250801022701_InitialCreate")]
+    [Migration("20250801040113_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace SupplyManagement.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company");
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("SupplyManagement.API.Models.Vendor", b =>
@@ -76,7 +76,27 @@ namespace SupplyManagement.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vendor");
+                    b.HasIndex("CompanyId")
+                        .IsUnique();
+
+                    b.ToTable("Vendors");
+                });
+
+            modelBuilder.Entity("SupplyManagement.API.Models.Vendor", b =>
+                {
+                    b.HasOne("SupplyManagement.API.Models.Company", "Company")
+                        .WithOne("Vendor")
+                        .HasForeignKey("SupplyManagement.API.Models.Vendor", "CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("SupplyManagement.API.Models.Company", b =>
+                {
+                    b.Navigation("Vendor")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
