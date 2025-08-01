@@ -1,0 +1,8 @@
+﻿@model CompanyRegisterViewModel
+<form asp-action="Register" method="post" enctype="multipart/form-data">
+    <input asp-for="CompanyName" placeholder="Nama Perusahaan" />
+    <input asp-for="Email" type="email" placeholder="Email" />
+    <input asp-for="PhoneNumber" placeholder="Telepon" />
+    <input asp-for="File" type="file" />
+    <button type="submit">Register</button>
+</form>
